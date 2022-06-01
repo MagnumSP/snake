@@ -187,7 +187,7 @@ void turn(direct_t direction)
     if(direction == snake.direction_now) {
         if(10 == snake.speed)
             return;
-        nake.speed++;
+        snake.speed++;
     } else if(2 == direction+snake.direction_now ||
               4 == direction+snake.direction_now) {
         if(1 == snake.speed)
@@ -331,31 +331,32 @@ START:
                     break;
                 } else if('y' == buf)
                     goto START;
-                }
-                break;
             }
-            if(board_width * board_high == snake.length) {
-                printf("-----卧槽牛逼!!!-----");
-                printf("Score: %d!\n", score);
-                printf("Play again? (y/n)\n");
-                //将键盘设置为阻塞
-                flag &= ~O_NONBLOCK;
-                fcntl(0,F_SETFL,flag);
-                while(1) {
-                    read(0,&buf,1);
-                    if('n' == buf) {
-                        printf("\nBye~\n");
-                        break;
-                    } else if('y' == buf)
-                        goto START;
-                }
-                break;
-            }
+            break;
         }
-        //恢复
-        system("stty icanon");
-        system("stty echo");
+        if(board_width * board_high == snake.length) {
+            printf("-----卧槽牛逼!!!-----");
+            printf("Score: %d!\n", score);
+            printf("Play again? (y/n)\n");
+            //将键盘设置为阻塞
+            flag &= ~O_NONBLOCK;
+            fcntl(0,F_SETFL,flag);
+            while(1) {
+                read(0,&buf,1);
+                if('n' == buf) {
+                    printf("\nBye~\n");
+                    break;
+                } else if('y' == buf) {
+                    goto START;
+                }
+            }
+            break;
+        }
+    }
+    //恢复
+    system("stty icanon");
+    system("stty echo");
 
-        return 0;
+    return 0;
 }
 
