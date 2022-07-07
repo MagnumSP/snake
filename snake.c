@@ -210,6 +210,7 @@ void display(void)
 {
     int i, j;
 
+    system("clear");
     printf("------------------------------------------\n");
     printf("Score: %d   Speed: %d  Length: %d\n", score, snake.speed, snake.length);
     for(j = 0; j<board_high+2; j++) {
